@@ -1,7 +1,6 @@
-package com.ginomarin.services;
+package com.main.java.ginomarin.services;
 
-import com.ginomarin.elements.Nodo;
-import com.ginomarin.structure.ArbolBinario;
+import com.main.java.ginomarin.structure.ArbolBinario;
 
 public class DataService {
 

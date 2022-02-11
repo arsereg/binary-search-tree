@@ -1,6 +1,6 @@
-package com.ginomarin.structure;
+package com.main.java.ginomarin.structure;
 
-import com.ginomarin.elements.Nodo;
+import com.main.java.ginomarin.elements.Nodo;
 
 public class ArbolBinario<T extends Comparable<T>> {
     private Nodo<T> nodoInicial;

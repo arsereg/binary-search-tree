@@ -1,4 +1,4 @@
-package com.ginomarin.elements;
+package com.main.java.ginomarin.elements;
 
 public class Nodo<T extends Comparable<T>>{
 

@@ -1,4 +1,4 @@
-package com.ginomarin.enums;
+package com.main.java.ginomarin.enums;
 
 public enum Actions {
     LOAD_PREBUILT_TREE(1),

@@ -1,10 +1,9 @@
-package com.ginomarin.services;
+package com.main.java.ginomarin.services;
 
-import com.ginomarin.elements.Nodo;
-import com.ginomarin.structure.ArbolBinario;
+import com.main.java.ginomarin.elements.Nodo;
+import com.main.java.ginomarin.structure.ArbolBinario;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 

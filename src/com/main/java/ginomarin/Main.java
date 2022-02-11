@@ -1,6 +1,6 @@
-package com.ginomarin;
+package com.main.java.ginomarin;
 
-import com.ginomarin.enums.Actions;
+import com.main.java.ginomarin.enums.Actions;
 
 import java.io.BufferedReader;
 import java.io.IOException;

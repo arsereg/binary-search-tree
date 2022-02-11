@@ -1,6 +1,6 @@
-package com.ginomarin;
+package com.main.java.ginomarin;
 
-import com.ginomarin.services.ArbolBinarioService;
+import com.main.java.ginomarin.services.ArbolBinarioService;
 
 public class Facade {
 
