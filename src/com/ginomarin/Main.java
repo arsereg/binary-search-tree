@@ -48,7 +48,8 @@ public class Main {
                 "Imprimir arbol",
                 "Imprimir Datos en Preorden",
                 "Imprimir Datos en Inorden",
-                "Imprimir Datos en PostOrden"};
+                "Imprimir Datos en PostOrden",
+                "Ingresar rango"};
         for (int i = 0; i < options.length; i++) {
             System.out.println(String.format(ANSI_CYAN + "%s" + ANSI_RESET + " - %s", i + 1, options[i]));
         }
@@ -75,7 +76,28 @@ public class Main {
             case PRINT_POSTORDEN:
                 printPostOrden();
             break;
+            case LOAD_RANGE:
+                loadRange();
+            break;
         }
+    }
+
+    private void loadRange() throws IOException {
+        out.println("Digite un rango en el siguiente formato X:Y para ingresar esos numeros");
+        String[] input = in.readLine().split(":");
+        if(input.length != 2){
+            printError("Formato invalido");
+            return;
+        }
+        int[] range = {Integer.parseInt(input[0]), Integer.parseInt(input[1])};
+        if(range[0] > range[1]){
+            printError("El segundo valor debe ser más alto que el primer valor");
+            return;
+        }
+        for (int i = range[0]; i <= range[1]; i++) {
+            facade.silentlyAdd(i);
+        }
+
     }
 
     private void printPostOrden() {
@@ -117,6 +139,16 @@ public class Main {
         out.println("Loading prebuilt");
         facade.initializeApplication();
         Arrays.asList(7, 14, 28, 5, 9, 8, 21, 3, 15, 24, 100, 1).stream().forEach(v -> facade.add(v.intValue()));
+    }
+
+    private void printError(String error){
+        String ANSI_RESET = "\u001B[0m";
+        String ANSI_RED = "\u001B[31m";
+        System.out.println(ANSI_RED);
+        System.out.println("--------------------------------");
+        System.out.println(error);
+        System.out.println("--------------------------------");
+        System.out.println(ANSI_RESET);
     }
 
 }

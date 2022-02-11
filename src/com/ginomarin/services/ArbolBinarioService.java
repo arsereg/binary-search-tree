@@ -205,12 +205,14 @@ public class ArbolBinarioService<T extends Comparable<T>> {
         }
     }
 
-    public void insert(T numero){
+    public void insert(T numero, boolean print){
         if(dataService.getArbol() == null){
             dataService.setArbol(new ArbolBinario());
         }
         dataService.getArbol().setNodoInicial(insert(dataService.getArbol().getNodoInicial(), numero));
-        printBinaryTree();
+        if(print){
+            printBinaryTree();
+        }
     }
 
     private Nodo<T> insert(Nodo<T> node, T key){

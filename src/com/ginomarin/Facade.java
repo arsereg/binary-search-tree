@@ -15,7 +15,11 @@ public class Facade {
     }
 
     public void add(Comparable comparable){
-        arbolBinarioService.insert(comparable);
+        arbolBinarioService.insert(comparable, true);
+    }
+
+    public void silentlyAdd(Comparable comparable){
+        arbolBinarioService.insert(comparable, false);
     }
 
     public String printPreOrden() {
