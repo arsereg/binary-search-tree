@@ -4,6 +4,7 @@ import com.ginomarin.elements.Nodo;
 import com.ginomarin.structure.ArbolBinario;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -79,6 +80,9 @@ public class ArbolBinarioService<T extends Comparable<T>> {
     }
 
     public void printBinaryTree(Nodo<T> root) {
+        String ANSI_GREEN = "\033[1;32m";
+        String ANSI_RESET = "\u001B[0m";
+        String ANSI_YELLOW = "\033[0;93m";
         List<List<String>> lines = new ArrayList<>();
 
         List<Nodo> level = new ArrayList<>();
@@ -124,6 +128,13 @@ public class ArbolBinarioService<T extends Comparable<T>> {
         }
 
         int perpiece = lines.get(lines.size() - 1).size() * (widest + 4);
+        String divider = "";
+        for (int i = 0; i < perpiece; i++) {
+            divider += "-";
+        }
+        System.out.println();
+        System.out.println(divider);
+        System.out.println();
         for (int i = 0; i < lines.size(); i++) {
             List<String> line = lines.get(i);
             int hpw = (int) Math.floor(perpiece / 2f) - 1;
@@ -132,16 +143,17 @@ public class ArbolBinarioService<T extends Comparable<T>> {
                 for (int j = 0; j < line.size(); j++) {
 
                     // split node
-                    char c = ' ';
+                    String c = " ";
                     if (j % 2 == 1) {
                         if (line.get(j - 1) != null) {
-                            c = (line.get(j) != null) ? '┴' : '┘';
+                            c = (line.get(j) != null) ? "┴" : "┘";
                         } else {
-                            if (j < line.size() && line.get(j) != null) c = '└';
+                            if (j < line.size() && line.get(j) != null) c = "└";
                         }
                     }
+                    System.out.print(ANSI_GREEN);
                     System.out.print(c);
-
+                    System.out.print(ANSI_RESET);
                     // lines and spaces
                     if (line.get(j) == null) {
                         for (int k = 0; k < perpiece - 1; k++) {
@@ -150,18 +162,24 @@ public class ArbolBinarioService<T extends Comparable<T>> {
                     } else {
 
                         for (int k = 0; k < hpw; k++) {
+                            System.out.print(ANSI_GREEN);
                             System.out.print(j % 2 == 0 ? " " : "─");
+                            System.out.print(ANSI_RESET);
                         }
+                        System.out.print(ANSI_GREEN);
                         System.out.print(j % 2 == 0 ? "┌" : "┐");
+                        System.out.print(ANSI_RESET);
                         for (int k = 0; k < hpw; k++) {
+                            System.out.print(ANSI_GREEN);
                             System.out.print(j % 2 == 0 ? "─" : " ");
+                            System.out.print(ANSI_RESET);
                         }
                     }
                 }
                 System.out.println();
             }
-
             // print line of numbers
+            System.out.print(ANSI_YELLOW);
             for (int j = 0; j < line.size(); j++) {
 
                 String f = line.get(j);
@@ -179,9 +197,11 @@ public class ArbolBinarioService<T extends Comparable<T>> {
                     System.out.print(" ");
                 }
             }
+            System.out.print(ANSI_RESET);
             System.out.println();
 
             perpiece /= 2;
+
         }
     }
 

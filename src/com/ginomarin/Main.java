@@ -116,6 +116,7 @@ public class Main {
     private void loadPrebuiltTree() {
         out.println("Loading prebuilt");
         facade.initializeApplication();
+        Arrays.asList(7, 14, 28, 5, 9, 8, 21, 3, 15, 24, 100, 1).stream().forEach(v -> facade.add(v.intValue()));
     }
 
 }
