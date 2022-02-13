@@ -10,16 +10,16 @@ public class Facade {
         arbolBinarioService.initializeApplication();
     }
 
-    public void printTree() {
-        arbolBinarioService.printBinaryTree();
+    public void printTree(boolean saveAsHtml) {
+        arbolBinarioService.printBinaryTree(saveAsHtml);
     }
 
     public void add(Comparable comparable){
-        arbolBinarioService.insert(comparable, true);
+        arbolBinarioService.insert(comparable, true, false);
     }
 
     public void silentlyAdd(Comparable comparable){
-        arbolBinarioService.insert(comparable, false);
+        arbolBinarioService.insert(comparable, false, false);
     }
 
     public String printPreOrden() {

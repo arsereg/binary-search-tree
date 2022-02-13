@@ -112,8 +112,10 @@ public class Main {
         System.out.println(facade.printPreOrden());
     }
 
-    private void printTree() {
-        facade.printTree();
+    private void printTree() throws IOException {
+        System.out.println("Desea guardar el arbol en formato HTML? S/N");
+        boolean print = in.readLine().equalsIgnoreCase("s");
+        facade.printTree(print);
     }
 
     private void loadFromInput() throws IOException {

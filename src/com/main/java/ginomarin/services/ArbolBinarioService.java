@@ -3,8 +3,13 @@ package com.main.java.ginomarin.services;
 import com.main.java.ginomarin.elements.Nodo;
 import com.main.java.ginomarin.structure.ArbolBinario;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class ArbolBinarioService<T extends Comparable<T>> {
@@ -70,15 +75,15 @@ public class ArbolBinarioService<T extends Comparable<T>> {
         postOrdenResultList.add(nodo.key);
     }
 
-    public void printBinaryTree(){
+    public void printBinaryTree(boolean saveAsHtml){
         if(null != dataService.getArbol()){
-            printBinaryTree(dataService.getArbol().getNodoInicial());
+            printBinaryTree(dataService.getArbol().getNodoInicial(), saveAsHtml);
         }else{
             printError("El arbol no ha sido inicializado");
         }
     }
 
-    public void printBinaryTree(Nodo<T> root) {
+    public void printBinaryTree(Nodo<T> root, boolean saveAsHtml) {
         String ANSI_GREEN = "\033[1;32m";
         String ANSI_RESET = "\u001B[0m";
         String ANSI_YELLOW = "\033[0;93m";
@@ -87,6 +92,7 @@ public class ArbolBinarioService<T extends Comparable<T>> {
         List<Nodo> level = new ArrayList<>();
         List<Nodo> next = new ArrayList<>();
 
+        List<String> linesForHtml = new ArrayList<>();
         level.add(root);
         int nn = 1;
 
@@ -138,6 +144,7 @@ public class ArbolBinarioService<T extends Comparable<T>> {
             List<String> line = lines.get(i);
             int hpw = (int) Math.floor(perpiece / 2f) - 1;
 
+            String result = "";
             if (i > 0) {
                 for (int j = 0; j < line.size(); j++) {
 
@@ -152,30 +159,36 @@ public class ArbolBinarioService<T extends Comparable<T>> {
                     }
                     System.out.print(ANSI_GREEN);
                     System.out.print(c);
+                    result += c;
                     System.out.print(ANSI_RESET);
                     // lines and spaces
                     if (line.get(j) == null) {
                         for (int k = 0; k < perpiece - 1; k++) {
                             System.out.print(" ");
+                            result += " ";
                         }
                     } else {
-
                         for (int k = 0; k < hpw; k++) {
                             System.out.print(ANSI_GREEN);
                             System.out.print(j % 2 == 0 ? " " : "─");
+                            result += j % 2 == 0 ? " " : "─";
                             System.out.print(ANSI_RESET);
                         }
                         System.out.print(ANSI_GREEN);
                         System.out.print(j % 2 == 0 ? "┌" : "┐");
+                        result += j % 2 == 0 ? "┌" : "┐";
                         System.out.print(ANSI_RESET);
                         for (int k = 0; k < hpw; k++) {
                             System.out.print(ANSI_GREEN);
                             System.out.print(j % 2 == 0 ? "─" : " ");
+                            result += j % 2 == 0 ? "─" : " ";
                             System.out.print(ANSI_RESET);
                         }
                     }
                 }
                 System.out.println();
+                linesForHtml.add(result);
+                result = "";
             }
             // print line of numbers
             System.out.print(ANSI_YELLOW);
@@ -190,27 +203,49 @@ public class ArbolBinarioService<T extends Comparable<T>> {
                 // a number
                 for (int k = 0; k < gap1; k++) {
                     System.out.print(" ");
+                    result += " ";
                 }
                 System.out.print(f);
+                result += f;
                 for (int k = 0; k < gap2; k++) {
                     System.out.print(" ");
+                    result += " ";
                 }
             }
             System.out.print(ANSI_RESET);
             System.out.println();
+            linesForHtml.add(result);
 
             perpiece /= 2;
-
+        }
+        if(saveAsHtml){
+            createHtml(linesForHtml);
         }
     }
 
-    public void insert(T numero, boolean print){
+    private void createHtml(List<String> linesForHtml) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("arbol.html"));
+            try {
+                writer.write(generateHtml(linesForHtml));
+                writer.write("\n");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void insert(T numero, boolean print, boolean saveAsHtml){
         if(dataService.getArbol() == null){
             dataService.setArbol(new ArbolBinario());
         }
         dataService.getArbol().setNodoInicial(insert(dataService.getArbol().getNodoInicial(), numero));
         if(print){
-            printBinaryTree();
+            printBinaryTree(saveAsHtml);
         }
     }
 
@@ -312,5 +347,27 @@ public class ArbolBinarioService<T extends Comparable<T>> {
         System.out.println(error);
         System.out.println("--------------------------------");
         System.out.println(ANSI_RESET);
+    }
+
+    private String generateHtml(List<String> lines){
+        Path fileName = Path.of("src/htmlTemplate.txt");
+        String actual = "";
+        try {
+            actual = Files.readString(fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Pattern p = Pattern.compile("([0-9])");
+        return String.format(actual, lines.stream().map(s -> {
+            Matcher m = p.matcher(s);
+            String color = "";
+            if(m.find()){
+                color = "green";
+            }else{
+                color = "yellow";
+            }
+            s = String.format("<p style=\"color:%s\">%s</p>", color, s.replace(" ", "&nbsp"));
+            return s;
+        }).collect(Collectors.joining("\n")));
     }
 }
