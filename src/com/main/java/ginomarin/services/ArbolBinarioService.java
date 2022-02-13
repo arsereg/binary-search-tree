@@ -224,18 +224,34 @@ public class ArbolBinarioService<T extends Comparable<T>> {
     }
 
     private void createHtml(List<String> linesForHtml) {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("arbol.html"));
-            try {
-                writer.write(generateHtml(linesForHtml));
-                writer.write("\n");
-            } catch (IOException e) {
-                e.printStackTrace();
+        Thread thread = new Thread(){
+            public void run(){
+                FileWriter fileWritter = null;
+                BufferedWriter writer = null;
+                try {
+                    fileWritter = new FileWriter("arbol.html");
+                    writer = new BufferedWriter(fileWritter);
+                    try {
+                        writer.write(generateHtml(linesForHtml));
+                        writer.write("\n");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        writer.flush();
+                        fileWritter.flush();
+                        writer.close();
+                        fileWritter.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        };
+        thread.start();
 
     }
 

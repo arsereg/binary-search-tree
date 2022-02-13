@@ -7,10 +7,19 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Tarea2" />
+        <module name="binary-search-tree" />
+      </profile>
+      <profile name="Annotation profile for Unknown" enabled="true">
+        <sourceOutputDir name="../../target/generated-sources/annotations" />
+        <sourceTestOutputDir name="../../target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="wrapper" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="binary-search-tree" target="16" />
       <module name="Tarea2" target="16" />
+      <module name="wrapper" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

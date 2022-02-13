@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Tarea2.iml" filepath="$PROJECT_DIR$/Tarea2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/binary-search-tree.iml" filepath="$PROJECT_DIR$/binary-search-tree.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.mvn/wrapper/wrapper.iml" filepath="$PROJECT_DIR$/.mvn/wrapper/wrapper.iml" />
     </modules>
   </component>
 </project>
