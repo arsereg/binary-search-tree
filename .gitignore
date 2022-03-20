@@ -78,6 +78,9 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+.mvn/**
+.idea/**
+
 # Editor-based Rest Client
 .idea/httpRequests
 
