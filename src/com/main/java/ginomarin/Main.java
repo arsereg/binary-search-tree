@@ -43,12 +43,8 @@ public class Main {
         String ANSI_CYAN = "\u001B[36m";
         String ANSI_RESET = "\u001B[0m";
         String[] options = {
-                "Datos precargados",
                 "Ingresar datos",
                 "Imprimir arbol",
-                "Imprimir Datos en Preorden",
-                "Imprimir Datos en Inorden",
-                "Imprimir Datos en PostOrden",
                 "Ingresar rango"};
         for (int i = 0; i < options.length; i++) {
             System.out.println(String.format(ANSI_CYAN + "%s" + ANSI_RESET + " - %s", i + 1, options[i]));
@@ -58,23 +54,11 @@ public class Main {
 
     public void execute(Actions action) throws IOException {
         switch (action) {
-            case LOAD_PREBUILT_TREE:
-                loadPrebuiltTree();
-            break;
             case GET_INPUT_FROM_USER:
                 loadFromInput();
             break;
             case PRINT_CURRENT_TREE:
                 printTree();
-            break;
-            case PRINT_PREORDEN:
-                printPreorden();
-            break;
-            case PRINT_INORDEN:
-                printInOrden();
-            break;
-            case PRINT_POSTORDEN:
-                printPostOrden();
             break;
             case LOAD_RANGE:
                 loadRange();
@@ -94,28 +78,12 @@ public class Main {
             printError("El segundo valor debe ser más alto que el primer valor");
             return;
         }
-        for (int i = range[0]; i <= range[1]; i++) {
-            facade.silentlyAdd(i);
-        }
 
     }
 
-    private void printPostOrden() {
-        System.out.println(facade.printPostOrden());
-    }
-
-    private void printInOrden() {
-        System.out.println(facade.printInOrden());
-    }
-
-    private void printPreorden() {
-        System.out.println(facade.printPreOrden());
-    }
 
     private void printTree() throws IOException {
-        System.out.println("Desea guardar el arbol en formato HTML? S/N");
-        boolean print = in.readLine().equalsIgnoreCase("s");
-        facade.printTree(print);
+        facade.printTree();
     }
 
     private void loadFromInput() throws IOException {
@@ -128,6 +96,12 @@ public class Main {
             if(input.equalsIgnoreCase("stop")){
                 keepAdding = false;
             }else{
+                if(null == facade.arbolB){
+                    System.out.println("Inicializando Arbol");
+                    System.out.print("Digite el tamaño del nodo para el Arbol B:");
+                    int size = Integer.parseInt(in.readLine());
+                    facade.initializeTree(size);
+                }
                 if(input.contains(",")){
                     Arrays.stream(input.split(",")).forEach(v -> facade.add(Integer.parseInt(v.trim())));
                 }else{
@@ -135,12 +109,6 @@ public class Main {
                 }
             }
         }while(keepAdding);
-    }
-
-    private void loadPrebuiltTree() {
-        out.println("Loading prebuilt");
-        facade.initializeApplication();
-        Arrays.asList(7, 14, 28, 5, 9, 8, 21, 3, 15, 24, 100, 1).stream().forEach(v -> facade.add(v.intValue()));
     }
 
     private void printError(String error){
