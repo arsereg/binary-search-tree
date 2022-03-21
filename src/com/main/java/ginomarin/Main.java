@@ -6,7 +6,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -57,9 +60,6 @@ public class Main {
             case GET_INPUT_FROM_USER:
                 loadFromInput();
             break;
-            case PRINT_CURRENT_TREE:
-                printTree();
-            break;
             case LOAD_RANGE:
                 loadRange();
             break;
@@ -82,31 +82,25 @@ public class Main {
     }
 
 
-    private void printTree() throws IOException {
-        facade.printTree();
-    }
-
     private void loadFromInput() throws IOException {
         boolean keepAdding = true;
         String ANSI_RED = "\u001B[31m";
         String ANSI_RESET = "\u001B[0m";
         do{
-            System.out.println("Digite el numero a agregar (escribir "+ANSI_RED+"Stop"+ANSI_RESET+" para terminar)");
+            System.out.println("Digite la llave y el dígito para ser ingresados (llave, valor)");
+            System.out.println("(digite "+ANSI_RED+"Stop"+ANSI_RESET+" para terminar)");
             String input = in.readLine();
             if(input.equalsIgnoreCase("stop")){
                 keepAdding = false;
             }else{
-                if(null == facade.arbolB){
+                if(null == facade.arbolBPlus){
                     System.out.println("Inicializando Arbol");
                     System.out.print("Digite el tamaño del nodo para el Arbol B:");
                     int size = Integer.parseInt(in.readLine());
                     facade.initializeTree(size);
                 }
-                if(input.contains(",")){
-                    Arrays.stream(input.split(",")).forEach(v -> facade.add(Integer.parseInt(v.trim())));
-                }else{
-                    facade.add(Integer.parseInt(input));
-                }
+                int[] inputArray = Arrays.asList(input.split(",")).stream().mapToInt(Integer::parseInt).toArray();
+                facade.add(inputArray[0], inputArray[1]);
             }
         }while(keepAdding);
     }

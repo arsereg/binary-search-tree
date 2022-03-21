@@ -1,22 +1,17 @@
 package com.main.java.ginomarin;
 
-
-import com.main.java.ginomarin.structure.ArbolB;
+import com.main.java.ginomarin.structure.BPlusTree;
 
 public class Facade {
 
-    ArbolB arbolB;
+    BPlusTree arbolBPlus;
 
     public void initializeTree(int nodeSize){
-        arbolB = new ArbolB(nodeSize);
+        arbolBPlus = new BPlusTree(nodeSize);
     }
 
-    public void printTree() {
-        arbolB.show();
-    }
-
-    public void add(int comparable){
-        arbolB.insert(comparable);
+    public void add(int key, int value){
+        arbolBPlus.insert(key, value);
     }
 
 }
