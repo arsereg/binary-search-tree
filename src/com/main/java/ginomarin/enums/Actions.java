@@ -1,13 +1,9 @@
 package com.main.java.ginomarin.enums;
 
 public enum Actions {
-    LOAD_PREBUILT_TREE(1),
-    GET_INPUT_FROM_USER(2),
-    PRINT_CURRENT_TREE(3),
-    PRINT_PREORDEN(4),
-    PRINT_INORDEN(5),
-    PRINT_POSTORDEN(6),
-    LOAD_RANGE(7);
+    GET_INPUT_FROM_USER(1),
+    PRINT_CURRENT_TREE(2),
+    LOAD_RANGE(3);
 
     public int id;
 

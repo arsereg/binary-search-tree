@@ -1,37 +1,20 @@
 package com.main.java.ginomarin;
 
 import com.main.java.ginomarin.services.ArbolBinarioService;
+import com.main.java.ginomarin.structure.RbTree;
 
 public class Facade {
 
-    ArbolBinarioService arbolBinarioService = new ArbolBinarioService();
+    RbTree rbTree = new RbTree();
 
-    public void initializeApplication() {
-        arbolBinarioService.initializeApplication();
+
+    public void printTree() {
+        rbTree.PrintLevel(rbTree.Root, rbTree.HeightT(rbTree.Root));
+        System.out.println();
     }
 
-    public void printTree(boolean saveAsHtml) {
-        arbolBinarioService.printBinaryTree(saveAsHtml);
+    public void add(String data){
+        rbTree.Insert(rbTree, data);
     }
 
-    public void add(Comparable comparable){
-        arbolBinarioService.insert(comparable, true, false);
-    }
-
-    public void silentlyAdd(Comparable comparable){
-        arbolBinarioService.insert(comparable, false, false);
-    }
-
-    public String printPreOrden() {
-        return arbolBinarioService.getPreordenResult();
-    }
-
-
-    public String printInOrden() {
-        return arbolBinarioService.getInOrdenResult();
-    }
-
-    public String printPostOrden() {
-        return arbolBinarioService.getPostOrdenResult();
-    }
 }
